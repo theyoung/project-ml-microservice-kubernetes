@@ -1,5 +1,5 @@
 <include a CircleCI status badge, here>
-[![theyoung](https://circleci.com/gh/theyoung/project-ml-microservice-kubernetes/tree/circleci-project-setup.svg?style=svg)](LINK)
+[![theyoung](https://circleci.com/gh/theyoung/project-ml-microservice-kubernetes/tree/circleci-project-setup.svg?style=svg)](https://app.circleci.com/pipelines/github/theyoung/project-ml-microservice-kubernetes?branch=circleci-project-setup)
 
 ## Project Overview
 
