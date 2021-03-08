@@ -1,1 +1,53 @@
-<paste log output from Kubernetes-mediated prediction, here>
+(.devops) ubuntu@master:~/project-ml-microservice-kubernetes$ kubectl get pods
+No resources found in default namespace.
+(.devops) ubuntu@master:~/project-ml-microservice-kubernetes$ ./run_kubernetes.sh 
+Authenticating with existing credentials...
+WARNING! Your password will be stored unencrypted in /home/ubuntu/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+deployment.apps/mlmicro created
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+mlmicro   0/1     1            0           0s
+error: unable to forward port because pod is not running. Current status=Pending
+(.devops) ubuntu@master:~/project-ml-microservice-kubernetes$ kubectl get deployments
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+mlmicro   1/1     1            1           89s
+(.devops) ubuntu@master:~/project-ml-microservice-kubernetes$ kubectl port-forward deployment/mlmicro 8000:80
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+Handling connection for 8000
+
+(.devops) ubuntu@master:~/project-ml-microservice-kubernetes$ kubectl logs deployment/mlmicro
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 188-899-543
+[2021-03-08 14:10:12,913] INFO in app: JSON payload: 
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2021-03-08 14:10:12,921] INFO in app: Inference payload DataFrame: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2021-03-08 14:10:12,927] INFO in app: Scaling Payload: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2021-03-08 14:10:12,930] INFO in app: Prediction: 
+[20.35373177134412]
+127.0.0.1 - - [08/Mar/2021 14:10:12] "POST /predict HTTP/1.1" 200 -
+[2021-03-08 14:10:38,607] INFO in app: JSON payload: 
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2021-03-08 14:10:38,615] INFO in app: Inference payload DataFrame: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2021-03-08 14:10:38,622] INFO in app: Scaling Payload: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2021-03-08 14:10:38,625] INFO in app: Prediction: 
+[20.35373177134412]
+127.0.0.1 - - [08/Mar/2021 14:10:38] "POST /predict HTTP/1.1" 200 -
